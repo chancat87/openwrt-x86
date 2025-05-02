@@ -236,10 +236,8 @@ bash 06-custom.sh
 # toolchain
 [ "$(whoami)" = "runner" ] && group "patching toolchain"
 if [ "$USE_GCC14" = "y" ]; then
-    rm -rf toolchain/binutils
-    cp -a ../master/openwrt/toolchain/binutils toolchain/binutils
-    rm -rf toolchain/gcc
-    cp -a ../master/openwrt/toolchain/gcc toolchain/gcc
+    rm -rf toolchain/{binutils,gcc}
+    git clone https://$github/pmkol/openwrt-llvm-toolchain toolchain -b gcc14 --depth=1
     curl -s https://$mirror/openwrt/generic/config-gcc14 > .config
 else
     curl -s https://$mirror/openwrt/generic/config-gcc11 > .config
